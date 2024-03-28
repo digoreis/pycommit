@@ -7,7 +7,11 @@ import pyperclip
 
 def load_commits(repo_path, size):
     repo = git.Repo(repo_path)
+    if repo.head.is_valid() is False:
+        return []
+
     iter_commits = repo.iter_commits()
+
     commit_messages = []
     for i, commit in enumerate(iter_commits):
         if i == size:
@@ -35,7 +39,7 @@ def load_log_parameters_from_yaml(file_path):
     Se o arquivo não existir ou não contiver a chave 'log_size', retorna zero.
     """
     if not os.path.exists(file_path):
-        return []
+        return 0
 
     with open(file_path, 'r') as file:
         yaml_data = yaml.safe_load(file)
@@ -95,9 +99,9 @@ if __name__ == "__main__":
     settings_path = project_path+"/.pycommit.yml"
     settings_context_values = load_context_parameters_from_yaml(settings_path)
     settings_logsize_value = load_log_parameters_from_yaml(settings_path)
-
     diff_value = get_git_diff(project_path)
     log_values = load_commits(project_path, settings_logsize_value)
+
     commit_message = generate_commit_message(diff_value, settings_context_values, log_values)
     print(commit_message)
     pyperclip.copy(commit_message)
