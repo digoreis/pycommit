@@ -30,6 +30,7 @@ To use this tool, follow these steps:
 You can customize the behavior of the commit message generation by modifying the `.pycommit.yml` file in your repository. Here is an example of how to structure the file:
 
 ```yaml
+log_size: 3
 context:
   - "Custom parameter 1"
   - "Custom parameter 2"

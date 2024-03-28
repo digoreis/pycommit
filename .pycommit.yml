@@ -1,3 +1,4 @@
+log_size: 3
 context:
   - This project is about the ChatGPT help to generate commit messages suggestions
   - This project use Python language 
